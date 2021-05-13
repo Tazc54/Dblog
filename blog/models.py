@@ -7,6 +7,11 @@ from django.contrib.auth.models import User
 # Django will create a table for each model defined in the models.py
 # We will define a Post model.
 
+class PublishedManager(models.Manager):
+    def get_queryset(self):
+        return super(PublishedManager,
+                     self).get_queryset().filter(status='published')
+
 
 class Post(models.Model):
     STATUS_CHOICES = (
@@ -33,3 +38,6 @@ class Post(models.Model):
 
     def __str__(self):
         return self.title
+
+    objects = models.Manager()  # The default manager.
+    published = PublishedManager()  # Our custom manager.
