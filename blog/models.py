@@ -2,6 +2,7 @@ from django.db import models
 from django.urls import reverse
 from django.utils import timezone
 from django.contrib.auth.models import User
+from taggit.managers import TaggableManager
 
 
 # A model is a class that subclasses django.db.model.models.Model, in which each attribute represents a database field.
@@ -42,6 +43,7 @@ class Post(models.Model):
 
     objects = models.Manager()  # The default manager.
     published = PublishedManager()  # Our custom manager.
+    tags = TaggableManager()
 
     def get_absolute_url(self):
         return reverse('blog:post_detail',
